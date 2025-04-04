@@ -100,10 +100,10 @@ Runs as a Docker container or directly on any system with Python 3.9+.
 ## Required Environment Variables
 Variable	Description
 PROWLARR_URL	Your Prowlarr instance URL (https only)
-API_KEY	Prowlarr API key
+API_KEY	  Prowlarr API key
 SEARCH_ITEMS	Comma-separated search terms
-INTERVAL_HOURS	(Default: 2) Time between search runs
-MAX_RESULTS	(Default: 5) Max results per search term
+INTERVAL_HOURS	(Default: 12) Time between search runs
+MAX_RESULTS	(Default: 3) Max results per search term
 MAX_AGE_DAYS	(Default: 30) Ignore older torrents
 🔔 Notification Options
 You must set at least one of these:
