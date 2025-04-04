@@ -75,7 +75,24 @@ It can even pull **box art from SteamGridDB** if you provide an API key — opti
 ## 🐳 Docker Compose Example
 
 ```yaml
-See docker-compose.yml
+services:
+  discoprowl:
+    image: danktankk/discoprowl:latest
+    environment:
+      PROWLARR_URL: ${PROWLARR_URL}
+      API_KEY: ${API_KEY}
+      SEARCH_ITEMS: "game 1,game2" 
+      MAX_AGE_DAYS: ""      ## ---[ defaults to 30 days ]--- ##
+      INTERVAL_HOURS: ""    ## ---[ defaults to 12 hours ]--- ##
+      MAX_RESULTS: ""       ## ---[ defaults to 3 ]--- ##
+      DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL}
+      STEAMGRIDDB_API_KEY: ${STEAMGRIDDB_API}
+      ## Provide only one of the following notification configurations:
+      ## DISCORD_WEBHOOK_URL: "https://discord.com/api/webhooks/yourhook"
+      ## APPRISE_URL: "apprise://yourappriseurl"
+      ## PUSHOVER_APP_TOKEN: "yourpushoverapptoken"
+      ## PUSHOVER_USER_KEY: "yourpushoveruserkey"
+    restart: unless-stopped
 
 Age filtering (e.g., ignore stuff older than 30 days)
 
@@ -96,16 +113,16 @@ MAX_AGE_DAYS	(Default: 30) Ignore older torrents
 🔔 Notification Options
 You must set at least one of these:
 
-### Variable	Description
+## Variable	Description
 DISCORD_WEBHOOK_URL	Discord webhook for sending results
-APPRISE_URL	Apprise notification target
+APPRISE_URL	        Apprise notification target
 PUSHOVER_APP_TOKEN	Pushover App Token
 PUSHOVER_USER_KEY	Pushover User Key
-### Optional Extras
+## Optional Extras
 Variable	Description
 STEAMGRIDDB_API_KEY	API key for getting game art (optional)
 DISALLOWED_KEYWORDS	Comma-separated words to block (optional)
-### How It Works
+## How It Works
 Takes your SEARCH_ITEMS list and queries them against Prowlarr
 
 Filters out anything that’s too old, not categorized as PC/Games, or contains blacklisted keywords
@@ -116,24 +133,7 @@ Optionally includes game thumbnails via SteamGridDB
 
 Repeats every INTERVAL_HOURS
 
-### Docker Quick Start
-yaml
-Copy
-Edit
-version: "3"
-services:
-  discoprowl:
-    image: danktankk/discoprowl:latest
-    environment:
-      PROWLARR_URL: https://your-prowlarr.url
-      API_KEY: your_api_key
-      SEARCH_ITEMS: doom,borderlands 3,fable,subnautica 2
-      INTERVAL_HOURS: 2
-      MAX_RESULTS: 5
-      MAX_AGE_DAYS: 30
-      DISCORD_WEBHOOK_URL: https://discord.com/api/webhooks/yourwebhook
-      STEAMGRIDDB_API_KEY: your_optional_key
-🧠 Tips
+## Tips
 This script does not filter based on just partial keyword matches — it uses whole-word boundary detection.
 
 If no image is found for a game title, it uses a fallback from your repo.
