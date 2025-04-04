@@ -16,7 +16,7 @@
 - [Apprise](https://github.com/caronc/apprise) services
 - Pushover (mobile push)
 
-🖼️ It can even pull **box art from SteamGridDB** if you provide an API key — optional, but schmexy!
+It can even pull **box art from SteamGridDB** if you provide an API key — optional, but schmexy!
 
 ---
 
