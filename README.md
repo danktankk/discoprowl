@@ -11,7 +11,7 @@
 
 **DiscoProwl** is a lightweight Python-powered search assistant for [Prowlarr](https://github.com/Prowlarr/Prowlarr). It periodically searches your configured indexers for game titles you care about, filters out irrelevant junk (console releases, macOS, old uploads), and notifies you when results match your exact query.  This is useful when you are waiting on a game to drop and want to get it as soon as possible!  You will be notified and then you decide how to proceed, for now...
 
-💬 **Notifications** are delivered via:
+💬 **Notifications** are delivered with choice of the following for the moment:
 - Discord webhook (rich embed)
 - [Apprise](https://github.com/caronc/apprise) services
 - Pushover (mobile push)
