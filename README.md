@@ -1,9 +1,8 @@
 <p align="left">
   <img src="https://raw.githubusercontent.com/danktankk/discoprowl/main/assets/logo-circular.png" alt="DiscoProwl Logo" height="100"/>
 </p>
-
 <p align="center">
-  <img src="https://raw.githubusercontent.com/danktankk/discoprowl/main/assets/logo-name.png" alt="DiscoProwl Name" height="70"/>
+  <img src="https://raw.githubusercontent.com/danktankk/discoprowl/main/assets/logo-name.png" alt="DiscoProwl Name" height="100"/>
 </p>
 
 
