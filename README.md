@@ -58,7 +58,7 @@ It can even pull **box art from SteamGridDB** if you provide an API key — opti
 ## How It Works
 
 1. Reads your search keywords from `SEARCH_ITEMS`
-2. Queries Prowlarr's `/api/v1/search` endpoint
+2. Queries Prowlarr's `/api` endpoint
 3. Filters results using:
    - ✅ Category: must include `games` or `pc`
    - ✅ Filename must include the **full search term** as a whole word
