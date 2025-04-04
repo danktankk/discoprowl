@@ -4,7 +4,7 @@ networks:
 
 services:
   discoprowl:
-    image: danktankk/discoprowl:latest  ## ---[ will pull appropriate platform (currently supports arm64v8, deb) ]--- ##
+    image: danktankk/discoprowl:latest  ## ---[ will pull appropriate platform (currently supports arm64v8, amd64) ]--- ##
     networks:
       - proxy
     environment:
