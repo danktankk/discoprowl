@@ -75,21 +75,7 @@ It can even pull **box art from SteamGridDB** if you provide an API key — opti
 ## 🐳 Docker Compose Example
 
 ```yaml
-services:
-  discoprowl:
-    image: danktankk/discoprowl:latest
-    container_name: discoprowl
-    environment:
-      PROWLARR_URL: "prowlarr.domain.com"
-      API_KEY: "your_prowlarr_api_key"
-      SEARCH_ITEMS: "game 1,game 2"
-      INTERVAL_HOURS: 12
-      MAX_RESULTS: 3
-      MAX_AGE_DAYS: 30
-      DISCORD_WEBHOOK_URL: "https://discord.com/api/webhooks/yourwebhook"
-      STEAMGRIDDB_API_KEY: "optional_api_key"
-      DISALLOWED_KEYWORDS: "ps4,ps5,xbox,macos"
-
+See docker-compose.yml
 
 Age filtering (e.g., ignore stuff older than 30 days)
 
