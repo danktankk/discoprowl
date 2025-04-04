@@ -78,9 +78,9 @@ services:
     image: danktankk/discoprowl:latest
     container_name: discoprowl
     environment:
-      PROWLARR_URL: "https://prowlarr.local"
+      PROWLARR_URL: "prowlarr.local"
       API_KEY: "your_prowlarr_api_key"
-      SEARCH_ITEMS: "doom,borderlands 3,subnautica 2"
+      SEARCH_ITEMS: "game 1,game 2"
       INTERVAL_HOURS: 12
       MAX_RESULTS: 3
       MAX_AGE_DAYS: 30
