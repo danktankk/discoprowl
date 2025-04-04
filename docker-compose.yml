@@ -1,1 +1,24 @@
+networks:
+  proxy:
+    external: true
 
+services:
+  discoprowl:
+    image: danktankk/discoprowl:latest  ## ---[ will pull appropriate platform (currently supports arm64v8, deb) ]--- ##
+    networks:
+      - proxy
+    environment:
+      PROWLARR_URL: ${PROWLARR_URL}    ## ---[ only 'sub.domain.com required' 'https://' prepended automatically ]--- ##
+      API_KEY: ${API_KEY}
+      SEARCH_ITEMS: "pga tour 2K25,monster hunter wilds"   ## ---[ comma delimiter, no spaces ]--- ## 
+      MAX_AGE_DAYS: ""        ## ---[ defaults to 30 days ]--- ##
+      INTERVAL_HOURS: ""      ## ---[ defaults to 12 hours ]--- ##
+      MAX_RESULTS: ""         ## ---[ defaults to 3 ]--- ##
+      DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL}
+      STEAMGRIDDB_API_KEY: ${STEAMGRIDDB_API}     ## ---[ optional ]--- ##
+      # Provide only one of the following notification configurations:
+      # DISCORD_WEBHOOK_URL: "https://discord.com/api/webhooks/yourhook"
+      # APPRISE_URL: "apprise://yourappriseurl"
+      # PUSHOVER_APP_TOKEN: "yourpushoverapptoken"
+      # PUSHOVER_USER_KEY: "yourpushoveruserkey"
+    restart: unless-stopped
