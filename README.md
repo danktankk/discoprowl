@@ -78,7 +78,7 @@ services:
     image: danktankk/discoprowl:latest
     container_name: discoprowl
     environment:
-      PROWLARR_URL: "prowlarr.local"
+      PROWLARR_URL: "prowlarr.domain.com"
       API_KEY: "your_prowlarr_api_key"
       SEARCH_ITEMS: "game 1,game 2"
       INTERVAL_HOURS: 12
