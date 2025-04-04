@@ -16,9 +16,9 @@ services:
       MAX_RESULTS: ""         ## ---[ defaults to 3 ]--- ##
       DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL}
       STEAMGRIDDB_API_KEY: ${STEAMGRIDDB_API}     ## ---[ optional ]--- ##
-      # Provide only one of the following notification configurations:
-      # DISCORD_WEBHOOK_URL: "https://discord.com/api/webhooks/yourhook"
-      # APPRISE_URL: "apprise://yourappriseurl"
-      # PUSHOVER_APP_TOKEN: "yourpushoverapptoken"
-      # PUSHOVER_USER_KEY: "yourpushoveruserkey"
+      ## Provide only one of the following notification configurations:
+      ## DISCORD_WEBHOOK_URL: "https://discord.com/api/webhooks/yourhook"
+      ## APPRISE_URL: "apprise://yourappriseurl"
+      ## PUSHOVER_APP_TOKEN: "yourpushoverapptoken"
+      ## PUSHOVER_USER_KEY: "yourpushoveruserkey"
     restart: unless-stopped
