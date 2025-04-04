@@ -22,4 +22,5 @@ services:
       ## APPRISE_URL: "apprise://yourappriseurl"
       ## PUSHOVER_APP_TOKEN: "yourpushoverapptoken"
       ## PUSHOVER_USER_KEY: "yourpushoveruserkey"
+      ## PUSHOVER_METHOD: "apprise"  ## leave commented if not using appraise for pushover
     restart: unless-stopped
