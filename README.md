@@ -1,6 +1,6 @@
 <p align="left">
-  <img src="https://raw.githubusercontent.com/danktankk/discoprowl/main/assets/logo.png" alt="DiscoProwl Logo" height="100"/>
-  <span><strong style="font-size:2em;">DiscoProwl</strong></span>
+  <img src="https://raw.githubusercontent.com/danktankk/discoprowl/main/assets/logo-circular.png" alt="DiscoProwl Logo" height="100" style="vertical-align: middle;"/>
+  <img src="https://raw.githubusercontent.com/danktankk/discoprowl/main/assets/logo-name.png" alt="DiscoProwl Text" height="100" style="vertical-align: middle; margin-left: 10px;"/>
 </p>
 
 ---
