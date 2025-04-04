@@ -118,10 +118,12 @@ DISCORD_WEBHOOK_URL	Discord webhook for sending results
 APPRISE_URL	        Apprise notification target
 PUSHOVER_APP_TOKEN	Pushover App Token
 PUSHOVER_USER_KEY	Pushover User Key
+
 ## Optional Extras
 Variable	Description
 STEAMGRIDDB_API_KEY	API key for getting game art (optional)
 DISALLOWED_KEYWORDS	Comma-separated words to block (optional)
+
 ## How It Works
 Takes your SEARCH_ITEMS list and queries them against Prowlarr
 
