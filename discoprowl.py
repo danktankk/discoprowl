@@ -30,12 +30,12 @@ SEARCH_ITEMS = [item.strip() for item in search_items_env.split(",") if item.str
 
 # Required configuration parameters
 try:
-    INTERVAL_HOURS = float(os.getenv("INTERVAL_HOURS", "2"))
+    INTERVAL_HOURS = float(os.getenv("INTERVAL_HOURS", "12"))
 except ValueError:
     INTERVAL_HOURS = 12
 
 try:
-    MAX_RESULTS = int(os.getenv("MAX_RESULTS", "5"))
+    MAX_RESULTS = int(os.getenv("MAX_RESULTS", "3"))
 except ValueError:
     MAX_RESULTS = 3
 
