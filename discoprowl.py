@@ -133,11 +133,14 @@ def get_game_image_url(query):
     :param query: The search query string.
     :return: URL string for the game image.
     """
-    fallback_url = "https://raw.githubusercontent.com/danktankk/discoprowl/main/assets/no-image.jpg"
+    local_asset_path = "assets/no-image2.jpg"
+    return local_asset_path
 
-    if not STEAMGRIDDB_API_KEY:
-        print("No SteamGridDB API key set.")
-        return fallback_url
+#    fallback_url = "https://raw.githubusercontent.com/danktankk/discoprowl/main/assets/no-image.jpg"
+
+#    if not STEAMGRIDDB_API_KEY:
+#        print("No SteamGridDB API key set.")
+#        return fallback_url
 
     try:
         encoded_query = urllib.parse.quote(query)
@@ -160,7 +163,7 @@ def get_game_image_url(query):
         game_id = data["data"][0]["id"]
         print(f"Game ID for '{query}' is {game_id}")
 
-        grid_url = f"https://www.steamgriddb.com/api/v2/grids/game/{game_id}?dimensions=600x900"
+        grid_url = f"https://www.steamgriddb.com/api/v2/grids/game/{game_id}"
         grid_response = requests.get(
             grid_url,
             headers={"Authorization": f"Bearer {STEAMGRIDDB_API_KEY}"},
