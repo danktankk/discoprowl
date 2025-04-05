@@ -11,7 +11,7 @@
 
 Have you ever found yourself watching upcoming latest AAA game title videos and then saw several you MUST have?  Did you then make a list of them and diligently search for these games daily until it released? No?  Me either. I just forgot about it until some random conversation brought these items back into focus.  But by now, there are *other games* that are just around the corner and you have missed time that *could have been spent* happily wasting your life away playing your new game.  That sucks, so I decided to whip up a little 'app-for-that' to help out on the whole "waste your life away" thing.    
 
-**DiscoProwl** is a lightweight Python-powered search assistant for [Prowlarr](https://github.com/Prowlarr/Prowlarr). It periodically searches your configured indexers for game titles you care about, filters out irrelevant junk (console releases, macOS, old uploads), and notifies you when results match your exact query.  This is useful when you are waiting on a game to drop and want to get it as soon as possible!  You will be notified and then you decide how to proceed, for now...
+**DiscoProwl** is a lightweight Python-powered search assistant for [Prowlarr](https://github.com/Prowlarr/Prowlarr). It periodically searches your configured indexers for game titles (or anything really) you want, filters out irrelevant junk (console releases, macOS, old uploads), and notifies you when results match your exact query.  This is useful when you are waiting on a game to drop and want to get it as soon as possible!  You will be notified and then you decide how to proceed, for now...
 
 💬 **Notifications** are delivered with choice of the following for the moment:
 - Discord webhook (rich embed)
