@@ -1,6 +1,6 @@
 """
 DiscoProwl - danktankk
-This script searches Prowlarr, fetches game images from SteamGridDB,
+Searches Prowlarr, fetches game images from SteamGridDB,
 and sends notifications via Discord, Apprise, and Pushover.
 """
 
@@ -9,7 +9,7 @@ import re
 import time
 import urllib.parse
 import requests
-import apprise  # pylint: disable=import-error
+import apprise
 
 # Required environment variables
 prowlarr_url = os.getenv("PROWLARR_URL")
@@ -49,8 +49,7 @@ STEAMGRIDDB_API_KEY = os.getenv("STEAMGRIDDB_API_KEY", "").strip()
 
 disallowed_keywords_env = os.getenv("DISALLOWED_KEYWORDS")
 if disallowed_keywords_env:
-    DISALLOWED_KEYWORDS = [kw.strip().lower() for kw in disallowed_keywords_env.split(",")
-                           if kw.strip()]
+    DISALLOWED_KEYWORDS = [kw.strip().lower() for kw in disallowed_keywords_env.split(",") if kw.strip()]
 else:
     DISALLOWED_KEYWORDS = []
 
@@ -65,12 +64,12 @@ if not (DISCORD_WEBHOOK_URL or APPRISE_URL or (PUSHOVER_APP_TOKEN and PUSHOVER_U
         "APPRISE_URL, or both PUSHOVER_APP_TOKEN and PUSHOVER_USER_KEY."
     )
 
-# ---------------- Helper Functions ----------------
-
+##<--############################################################
+##         ----------[  Helper Functions ]----------           ##
+############################################################-->##
 def is_game(result):
     """
     Determines if a search result is likely a game by checking its categories.
-
     :param result: Dict representing a search result.
     :return: True if result appears to be a game.
     """
@@ -83,6 +82,7 @@ def is_game(result):
 def passes_filters(result, query):
     """
     Check if a search result passes all filtering criteria.
+    Uses a whole-word safe query match.
 
     :param result: Dict representing a search result.
     :param query: The search query.
@@ -103,12 +103,6 @@ def passes_filters(result, query):
     return bool(re.search(rf'\b{safe_query}\b', filename))
 
 def fetch_game_id(query):
-    """
-    Fetch the game ID from SteamGridDB using the autocomplete endpoint.
-
-    :param query: The search query.
-    :return: Game ID or None.
-    """
     encoded = urllib.parse.quote(query)
     url = f"https://www.steamgriddb.com/api/v2/search/autocomplete/{encoded}"
     response = requests.get(
@@ -123,12 +117,6 @@ def fetch_game_id(query):
     return data["data"][0]["id"]
 
 def fetch_images(game_id):
-    """
-    Fetch images for a given game ID from SteamGridDB.
-
-    :param game_id: The game ID.
-    :return: List of image dictionaries.
-    """
     url = f"https://www.steamgriddb.com/api/v2/grids/game/{game_id}"
     response = requests.get(
         url,
@@ -139,13 +127,6 @@ def fetch_images(game_id):
     return response.json().get("data", [])
 
 def get_game_image_urls(query):
-    """
-    Get full-size and thumbnail image URLs for a game.
-    Returns a tuple (main_image_url, thumbnail_url).
-
-    :param query: The search query.
-    :return: Tuple of image URLs.
-    """
     fallback_url = "https://raw.githubusercontent.com/danktankk/discoprowl/main/assets/no-image.jpg"
     if not STEAMGRIDDB_API_KEY:
         print("No SteamGridDB API key set.")
@@ -168,13 +149,6 @@ def get_game_image_urls(query):
         return fallback_url, fallback_url
 
 def build_embed(query, filtered_results):
-    """
-    Build the Discord embed and description.
-
-    :param query: The search query.
-    :param filtered_results: List of filtered results.
-    :return: Tuple (embed, description).
-    """
     formatted = f"**{query.upper()}**"
     if not filtered_results:
         desc = f"Search Results for {formatted}: No results met the filter criteria."
@@ -183,10 +157,10 @@ def build_embed(query, filtered_results):
         for i, res in enumerate(filtered_results, start=1):
             lines.append(
                 f"**Result {i}:**\n"
-                f"Indexer: `{res.get('indexer', 'N/A')}`\n"
-                f"Seeders: `{res.get('seeders', 'N/A')}`\n"
-                f"Filename: `{res.get('fileName', 'N/A')}`\n"
-                f"Age: `{res.get('age', 'N/A')}`"
+                f"Indexer: {res.get('indexer', 'N/A')}\n"
+                f"Seeders: {res.get('seeders', 'N/A')}\n"
+                f"Filename: {res.get('fileName', 'N/A')}\n"
+                f"Age: {res.get('age', 'N/A')}"
             )
         desc = "\n".join(lines)
     embed = {
@@ -202,28 +176,24 @@ def build_embed(query, filtered_results):
             embed["thumbnail"] = {"url": thumb_img}
     return embed, desc
 
-# ---------------- Notification Functions ----------------
-
+##<--############################################################
+##                   Notification Functions                    ##
+############################################################-->##
 def send_notification(query, results):
-    """
-    Filter search results and send notifications.
-
-    :param query: The search query.
-    :param results: List of search results.
-    """
+    # Keyword-based search notification
     filtered = [res for res in results if passes_filters(res, query)]
     filtered = filtered[:MAX_RESULTS]
     embed, desc = build_embed(query, filtered)
-    payload = {
+    payload_keyword = {
         "username": "DiscoBot!",
         "content": "",
         "embeds": [embed],
     }
     if DISCORD_WEBHOOK_URL:
         try:
-            resp = requests.post(DISCORD_WEBHOOK_URL, json=payload, timeout=30)
+            resp = requests.post(DISCORD_WEBHOOK_URL, json=payload_keyword, timeout=30)
             resp.raise_for_status()
-            print("Notification sent via Discord.")
+            print("Keyword notification sent via Discord.")
         except requests.RequestException as err:
             print(f"Error sending Discord notification: {err}")
     if APPRISE_URL:
@@ -231,45 +201,32 @@ def send_notification(query, results):
             aobj = apprise.Apprise()
             aobj.add(APPRISE_URL)
             aobj.notify(title=f"Search Results for {query.upper()}", body=desc)
-            print("Notification sent via Apprise.")
-        except Exception as err:  # pylint: disable=broad-exception-caught
+            print("Keyword notification sent via Apprise.")
+        except Exception as err:
             print(f"Error sending Apprise notification: {err}")
     if PUSHOVER_APP_TOKEN and PUSHOVER_USER_KEY:
-        pushover_method = os.getenv("PUSHOVER_METHOD", "api").lower()
-        if pushover_method == "apprise":
-            try:
-                aobj = apprise.Apprise()
-                pushover_url = f"pushover://{PUSHOVER_USER_KEY}/{PUSHOVER_APP_TOKEN}"
-                aobj.add(pushover_url)
-                aobj.notify(title=f"Search Results for {query.upper()}", body=desc)
-                print("Notification sent via Pushover (Apprise).")
-            except Exception as err:  # pylint: disable=broad-exception-caught
-                print(f"Error sending Pushover notification via Apprise: {err}")
-        else:
-            try:
-                pushover_payload = {
-                    "token": PUSHOVER_APP_TOKEN,
-                    "user": PUSHOVER_USER_KEY,
-                    "message": desc,
-                    "title": f"Search Results for {query.upper()}",
-                }
-                pr = requests.post(
-                    "https://api.pushover.net/1/messages.json",
-                    data=pushover_payload,
-                    timeout=30,
-                )
-                pr.raise_for_status()
-                print("Notification sent via Pushover (Direct API).")
-            except Exception as err:  # pylint: disable=broad-exception-caught
-                print(f"Error sending Pushover notification via API: {err}")
+        try:
+            main_img, _ = get_game_image_urls(query)
+            img_response = requests.get(main_img, timeout=10)
+            img_response.raise_for_status()
+            image_data = img_response.content
+            pushover_payload = {
+                "token": PUSHOVER_APP_TOKEN,
+                "user": PUSHOVER_USER_KEY,
+                "message": desc,
+                "title": f"Search Results for {query.upper()}",
+            }
+            files = {"attachment": ("image.jpg", image_data, "image/jpeg")}
+            pr = requests.post("https://api.pushover.net/1/messages.json",
+                               data=pushover_payload,
+                               files=files,
+                               timeout=30)
+            pr.raise_for_status()
+            print(f"Keyword notification sent via Pushover (Direct API) with image attachment. Status: {pr.status_code}")
+        except Exception as err:
+            print(f"Error sending Pushover notification via API: {err}")
 
 def search_item(query):
-    """
-    Search Prowlarr for a given query.
-
-    :param query: The search query.
-    :return: JSON response if successful, else None.
-    """
     url = f"{prowlarr_url}/api/v1/search"
     params = {"query": query, "type": "search", "indexerIds": []}
     headers = {"X-Api-Key": API_KEY}
@@ -282,9 +239,6 @@ def search_item(query):
         return None
 
 def main():
-    """
-    Main function that cycles through search items and sends notifications.
-    """
     print(f"Starting search cycle for {len(SEARCH_ITEMS)} items...")
     while True:
         for query in SEARCH_ITEMS:
@@ -295,7 +249,7 @@ def main():
             else:
                 print(f"No results returned for '{query}'.")
             send_notification(query, results or [])
-            print()  # Blank line between queries
+            print()  # print blank line between queries
         print(f"Cycle complete. Waiting for {INTERVAL_HOURS} hours before next cycle...")
         time.sleep(INTERVAL_HOURS * 3600)
 
